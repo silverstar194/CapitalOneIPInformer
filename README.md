@@ -1,12 +1,12 @@
 # Capital One IP Informer
-Let webtraffic intelligently inform you about your next market move.
+Let web traffic  intelligently inform you about your next market move.
 
 ## Description
-The main idea behind IP Informer is to make it easy for mergents to combine their Capital One transaction information with their webtraffic.
-By finding an area where webtraffic is high but sales are lacking it will make targeted advertizing high effective and new lead generation more economically.
+The main idea behind IP Informer is to make it easy for merchants to combine their Capital One transaction information with their web traffic .
+By finding an area where web traffic  is high but sales are lacking it will make targeted advertising high effective and new lead generation more economically.
 
 
-## Strutuce of the Project
+## Structure  of the Project
 I have broken the project up in Django services allowing easy import and upkeep of data.
 
 
@@ -17,7 +17,7 @@ I have broken the project up in Django services allowing easy import and upkeep 
 def index_view(request):
   pass
 ```
-The dectorator tracks uses are they access the site. Note: The record_ip only logs ips initally. Services will batch the reverse lookup later so enduser has no descease in access speed
+The decorator  tracks uses are they access the site. Note: The record_ip only logs ips initially. Services will batch the reverse lookup later so ensures has no decease in web site speed.
 
 
 ## General Data Gathering
@@ -26,8 +26,8 @@ I pull data from several sources. They are outlined below:
 2. Each merchant from your transactions is reverse looked up using latitude and longitude to determine the FIPS county code. This is done with the ```gather_fips``` service
 3. Once each merchant is mapped to a FIP additional FIBS data is added from US Census data. This is done with the ```gather_fips_data``` service
 
-## ML and Anylistis (all the fun stuff!)
-I use two main techniques to identify potential market leads and marketing targets: dbscan clustering and multi. variable nearest neighboors. Additionally, I leverage MatterMark for local companies once cluster locations are determined. Below is a walk through of the data flow:
+## ML and Analysis (all the fun stuff!)
+I use two main techniques to identify potential market leads and marketing targets: dbscan clustering and multi. variable nearest neighbors. Additionally, I leverage MatterMark for local companies once cluster locations are determined. Below is a walk through of the data flow:
 
 1. Transactions and Traffic is difference based on linear distance computed from latitude and longitude
 2. Points are plotted and clustered.
@@ -41,7 +41,7 @@ I use two main techniques to identify potential market leads and marketing targe
 
 ```merchants```
 
-Pulls all merchants assoicted with your account from Capital One and into the local database.
+Pulls all merchants associated with your account from Capital One and into the local database.
 
 ```compute_fib_scores```
 
@@ -53,7 +53,7 @@ Maps latitudes and longitudes to FIBS. This is done so it can be used with US Ce
 
 ```gather_fips_data```
 
-Imports and maps US Census data ot each FIB in local database.
+Imports and maps US Census data to each FIB in local database.
 
 ```mattermark```
 
@@ -64,19 +64,19 @@ Runs FIBS and tags through MatterMark to gather related businesses in the cluste
 
 ```core_merchant```
 
-Sets up the main account. This is what a endusers account would look like.
+Sets up the main account. This is what an ensusers  account would look like.
 
 ```generate_traffic```
 
-I don't have a long time to moniter people visting a site so I simulated some traffic.
+I don't have a long time to monitor people visiting a site so I simulated some traffic.
 
 ```generate_transactions```
 
-Wanted more transactions then could pull from API. I simuluated some as well.
+Wanted more transactions then could pull from API. I simulated some as well.
 
 ```sync_transactions```
 
-Creates traffic for each transaction as the people must have have a traffic record when they checked out.
+Creates traffic for each transaction as the people must have had a traffic record when they checked out.
 
 ```scatter_merchants```
 
@@ -84,7 +84,7 @@ Merchants tended to be within a very small radius. I provide some variation to t
 
 ```scatter_traffic```
 
-Inital traffic was too tightly bound. I added more variation.
+Initial traffic was too tightly bound. I added more variation.
 
 
 

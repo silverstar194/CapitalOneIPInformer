@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^admin/$', admin.site.urls),
     url(r'^investigate/$', views_backend.investigate, name='investigate'),
     url(r'^index/$', views_backend.index, name='index'),
+    url(r'^remedy/(?P<id>\w{0,50})/$', views_backend.remedy, name='remedy'),
 ]

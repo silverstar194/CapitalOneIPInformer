@@ -1,0 +1,68 @@
+{% include "menu.html" %}
+<html>
+<body>
+<div class="container" style="width:45%;float:left">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading"> {{fips_data.county}} - FIPS: {{fips_data.fips}}</div>
+      <div class="panel-body">
+          {%if fips_data.mean_income > 42000 %}
+          <div class="shadow-sm p-3 mb-5" style="background-color:lightgreen">Mean Income {{fips_data.mean_income|floatformat}} (Above Average)</div>
+          {%else%}
+            <div class="shadow-sm p-3 mb-5" style="background-color:red">Mean Income {{fips_data.mean_income|floatformat}} (Below Average)</div>
+          {%endif%}
+          <div class="shadow-sm p-3 mb-5">Total Population 18-25 {{fips_data.total_population_18_25}}</div>
+
+
+          {%if fips_data.male_population_18_25 > fips_data.female_population_18_25 %}
+          <div class="shadow-sm p-3 mb-5"  style="background-color:lightblue">Males 8-25 {{fips_data.male_population_18_25}} (More Males)</div>
+          {%else%}
+           <div class="shadow-sm p-3 mb-5">Males 18-25 {{fips_data.male_population_18_25}}</div>
+           {%endif%}
+
+    {%if fips_data.male_population_18_25 < fips_data.female_population_18_25 %}
+    <div class="shadow-sm p-3 mb-5" style="background-color:lightpink">Females 18-25 {{fips_data.female_population_18_25}} (More Females)</div>
+          {%else%}
+           <div class="shadow-sm p-3 mb-5">Females 18-25 {{fips_data.female_population_18_25}}</div>
+          {%endif%}
+
+
+    <div class="shadow-sm p-3 mb-5">College 18-25 {{fips_data.population_18_25_bat_or_up}}</div>
+
+    <div class="shadow-sm p-3 mb-5">Population 25+ {{fips_data.population_25_or_up}}</div>
+    <div class="shadow-sm p-3 mb-5">Population 25+ Grad. School and beyond {{fips_data.population_25_or_up_grad}}</div>
+
+      </div>
+    </div>
+
+    <h4>Our Relation Tags</h4>
+    <div class="shadow-lg p-3 mb-5">
+    {%for tag in tags%}
+    {{tag}}
+    {%endfor%}
+    </div>
+
+</div>
+
+<body>
+<div class="container" style="width:45%;float:right">
+
+    {% for lead in leads%}
+    <div class="panel panel-primary">
+      <div class="panel-heading"> {{lead.object_name}} - MatterMark Score: {{lead.company_mattermark_score}}</div>
+      <div class="panel-body">
+         <div class="shadow-sm p-3 mb-5" style="background-color:lightblue">
+             Website: {{lead.company_domain}}</br>
+             Funding: {{lead.company_funding}}</br>
+             Keywords: {{lead.company_keywords}}</br>
+         </div>
+
+
+      </div>
+    </div>
+    {%endfor%}
+
+
+</div>
+</body>
+</html>

@@ -1,14 +1,17 @@
 import random
 import pandas
+import json
 import numpy
+import re
 from sklearn.cluster import DBSCAN
 
 
 from django.shortcuts import render
+from django.db.models import Sum
 
 from rest_framework.decorators import api_view
 
-from .models import Transaction, Merchant, Traffic, FipsData
+from .models import Transaction, Merchant, Traffic, FipsData, BusinessInfo
 from .utils import compute_distance, get_centermost_point
 
 
@@ -95,27 +98,68 @@ def investigate(request):
 
     ##Gather ones just with fips
     center_traffic_points_with_fips = []
+    fips_data_center_traffic = []
     center_lat_fips = []
     center_lng_fips = []
     for i in range(0,len(center_lat)):
         center_traffic = Traffic.objects.get(lat=center_lat[i], lng=center_lng[i])
-        # if center_traffic.fips == "fips": ## Fixed some strange stuff here leaving for reference
-        #     center_traffic.fips = None
-        #     center_traffic.save()
-        if center_traffic.fips:
-            print(center_traffic.fips)
+        if center_traffic.fips == "fips": ## Fixed some strange stuff here leaving for reference
+            center_traffic.fips = None
+            center_traffic.save()
+        if center_traffic.fips and center_traffic.ip:
             center_traffic_points_with_fips.append(center_traffic)
             center_lat_fips.append(center_lat[i])
             center_lng_fips.append(center_lng[i])
+            ## Adds FIPS info
+            fips_data = FipsData.objects.filter(fips=center_traffic.fips).first()
+            fips_data_center_traffic.append({"data":fips_data, "ip":center_traffic.ip})
 
-    # ## Adds FIPS info
-    # FipsData
+    lowest = 10000
+    best = None
+    for e in fips_data_center_traffic:
+        print(e)
+        if e["data"]:
+            if e["data"].score < lowest:
+                lowest = e["data"].score
+                best = e
+
+    ##Some more stats
+    total_transactions = Transaction.objects.all().count()
+    average_cost = float(Transaction.objects.aggregate(Sum('amount'))["amount__sum"])/total_transactions
+    total_traffic = Traffic.objects.all().count()
+    untapped_traffic = len(output_lat)
+    gains = average_cost * (untapped_traffic) * .1  ## 10% gain in conversion
 
 
 
     return render(request, template_name='investigate.html',context={"lat":output_lat, "lng":output_lng,
                                                                      "num_cluser":num_clusters,"center_lat":center_lat,
                                                                      "center_lng":center_lng, "center_lat_fips":center_lat_fips,
-                                                                     "center_lng_fips":center_lng_fips, "traffic":center_traffic_points_with_fips,
-                                                                     "recommended":center_traffic[0]})
+                                                                     "center_lng_fips":center_lng_fips,
+                                                                     "recommended":center_traffic_points_with_fips[0],
+                                                                     "traffic_data":fips_data_center_traffic, "best":best,
+                                                                     "total_transactions":total_transactions,
+                                                                     "total_traffic":total_traffic,"gains":gains,
+                                                                     "untapped_traffic":untapped_traffic, "average_cost":average_cost})
+
+
+@api_view(['GET'])
+def remedy(request, id):
+    fips_data = FipsData.objects.filter(fips=id).first()
+    trans = Transaction.objects.all()
+
+    tags = {}
+    for t in trans:
+        m = t.from_merchant
+        if m.category:
+            categ = json.dumps(m.category)
+            categ = re.sub(r'^[a-zA-Z]*$', '', categ)
+            if categ in tags:
+                tags[categ] = tags[categ] + 1
+            else:
+                tags[categ] = 1
+
+    leads = BusinessInfo.objects.filter(fips=fips_data.fips).order_by("-company_mattermark_score").all()[1:10] ##Limit for viewing
+    return render(request, template_name='remedy.html',context={"fips_data":fips_data, "tags":list(tags.keys())[1:10], "leads":leads}) ##Limit tags to top ones
+
 

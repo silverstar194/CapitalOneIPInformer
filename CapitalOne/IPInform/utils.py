@@ -3,6 +3,7 @@ from math import sin, cos, sqrt, atan2, radians
 from shapely.geometry import MultiPoint
 from geopy.distance import great_circle
 
+from .models import Traffic, Transaction
 
 def compute_distance(lat_one, lng_one, lat_two, lng_two):
     if not (lat_one and lng_one and lat_two and lng_two):

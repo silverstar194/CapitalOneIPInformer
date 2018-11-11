@@ -19,9 +19,9 @@ class Command(BaseCommand):
         Gather fibs for each transaction
         """
 
-        ##Clean up fibs
-        for fib in FipsData.objects.all():
-            fib.delete()
+        # #Clean up fibs
+        # for fib in FipsData.objects.all():
+        #     fib.delete()
 
         ## Load in stats by fibs
         module_dir = os.path.dirname(__file__)
@@ -59,8 +59,15 @@ class Command(BaseCommand):
                 if line_count == 0 or line_count == 1:
                     line_count += 1
                 else:
-                    t = FipsData.objects.get(fips=row[1])
-                    t.income = row[3]
+                    t = FipsData.objects.filter(fips=row[1]).first()
+                    t.mean_income = row[3]
                     t.save()
+
+        traffic = Traffic.objects.all()
+        count = 0
+        for t in traffic:
+            if not t.fips == 'fips' and FipsData.objects.filter(fips=t.fips).count() > 0 :
+                t.fips_data = FipsData.objects.filter(fips=t.fips).first()
+                t.save()
 
 

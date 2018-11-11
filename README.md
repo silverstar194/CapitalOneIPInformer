@@ -37,23 +37,54 @@ I use two main techniques to identify potential market leads and marketing targe
 
 ## List of services with a brief description
 
-### Demo Seeding Services
-core_merchant
-generate_traffic
-generate_transactions
-scatter_merchants
-scatter_traffic
-
-
 ### Production/Batch Services
-merchants
-compute_fib_scores
-gather_fips
-gather_fips_data
-mattermark
-sync_transactions
+
+```merchants```
+
+Pulls all merchants assoicted with your account from Capital One and into the local database.
+
+```compute_fib_scores```
+
+Computes a score for how close a FIB is to the market demographics of your past transactions. Does so through normalization and a linear combination.
+
+```gather_fips```
+
+Maps latitudes and longitudes to FIBS. This is done so it can be used with US Census data.
+
+```gather_fips_data```
+
+Imports and maps US Census data ot each FIB in local database.
+
+```mattermark```
+
+Runs FIBS and tags through MatterMark to gather related businesses in the cluster area.
 
 
+### Demo Seeding Services
+
+```core_merchant```
+
+Sets up the main account. This is what a endusers account would look like.
+
+```generate_traffic```
+
+I don't have a long time to moniter people visting a site so I simulated some traffic.
+
+```generate_transactions```
+
+Wanted more transactions then could pull from API. I simuluated some as well.
+
+```sync_transactions```
+
+Creates traffic for each transaction as the people must have have a traffic record when they checked out.
+
+```scatter_merchants```
+
+Merchants tended to be within a very small radius. I provide some variation to the dataset I scattered them out.
+
+```scatter_traffic``
+
+Inital traffic was too tightly bound. I added more variation.
 
 
 

@@ -82,7 +82,7 @@ Creates traffic for each transaction as the people must have have a traffic reco
 
 Merchants tended to be within a very small radius. I provide some variation to the dataset I scattered them out.
 
-```scatter_traffic``
+```scatter_traffic```
 
 Inital traffic was too tightly bound. I added more variation.
 

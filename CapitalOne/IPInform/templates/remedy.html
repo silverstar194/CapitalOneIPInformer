@@ -52,12 +52,17 @@
       <div class="panel-heading"> {{lead.object_name}} - MatterMark Score: {{lead.company_mattermark_score}}</div>
       <div class="panel-body">
          <div class="shadow-sm p-3 mb-5" style="background-color:lightblue">
-             Website: {{lead.company_domain}}</br>
+             <a href="http://{{lead.company_domain}}">Website: {{lead.company_domain}}</br></br></a>
              Funding: {{lead.company_funding}}</br>
              Keywords: {{lead.company_keywords}}</br>
+             </br>
+             <b>Description</b>
+              </br>
+             {{lead.description}}
+             </br>
          </div>
-
-
+           Revenue Range: {{lead.revenue_range}}
+          <div style="float:right"><b>MatterMark ID:  {{lead.object_id}}</b></div>
       </div>
     </div>
     {%endfor%}

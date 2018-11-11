@@ -64,6 +64,10 @@ class BusinessInfo(models.Model):
     company_keywords = models.CharField(max_length=256, blank=True, null=True)
     company_mattermark_score = models.IntegerField(blank=True, null=True)
     object_id = models.CharField(max_length=64, blank=True, null=True)
+    description = models.CharField(max_length=1024, blank=True, null=True)
+    revenue_range = models.CharField(max_length=64, blank=True, null=True)
+    play_url = models.CharField(max_length=64, blank=True, null=True)
+    app_name = models.CharField(max_length=64, blank=True, null=True)
 
 
 class Traffic(models.Model):

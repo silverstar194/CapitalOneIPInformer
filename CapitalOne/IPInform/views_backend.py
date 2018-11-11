@@ -8,6 +8,7 @@ from sklearn.cluster import DBSCAN
 
 from django.shortcuts import render
 from django.db.models import Sum
+from django.http import HttpResponseRedirect
 
 from rest_framework.decorators import api_view
 
@@ -145,8 +146,10 @@ def investigate(request):
 
 @api_view(['GET'])
 def remedy(request, id):
+
     fips_data = FipsData.objects.filter(fips=id).first()
     trans = Transaction.objects.all()
+
 
     tags = {}
     for t in trans:

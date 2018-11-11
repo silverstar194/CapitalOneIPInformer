@@ -5,6 +5,7 @@ Let web traffic  intelligently inform you about your next market move.
 The main idea behind IP Informer is to make it easy for merchants to combine their Capital One transaction information with their web traffic .
 By finding an area where web traffic  is high but sales are lacking it will make targeted advertising high effective and new lead generation more economically.
 
+[[https://github.com/silverstar194/CapitalOneIPInformer/tree/master/CapitalOne/screenshots/screenshot_one.png]]
 
 ## Structure  of the Project
 I have broken the project up in Django services allowing easy import and upkeep of data.

@@ -21,6 +21,7 @@ from IPInform import views_backend
 
 urlpatterns = [
     url(r'^admin/$', admin.site.urls),
+    url(r'^make_purchase/$', views.make_purchase, name="make_purchase"),
     url(r'^investigate/$', views_backend.investigate, name='investigate'),
     url(r'^index/$', views_backend.index, name='index'),
     url(r'^remedy/(?P<id>\w{0,50})/$', views_backend.remedy, name='remedy'),

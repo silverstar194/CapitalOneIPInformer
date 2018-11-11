@@ -16,6 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """
         Computes score for each fib relative to current transactions
+        I am doing a simple normalization and the linearly combining. Might ML weights at a later point.
         """
 
         transactions = Transaction.objects.all()

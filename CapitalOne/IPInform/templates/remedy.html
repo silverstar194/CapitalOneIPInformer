@@ -3,9 +3,15 @@
 <body>
 <div class="container" style="width:45%;float:left">
 
+    <div class="alert alert-success alert-dismissible">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Here is a cluster we think matches strongly with your customer base..
+    </div>
+
     <div class="panel panel-primary">
       <div class="panel-heading"> {{fips_data.county}} - FIPS: {{fips_data.fips}}</div>
       <div class="panel-body">
+          <div class="shadow-sm p-3 mb-5"><p></p></div>
           {%if fips_data.mean_income > 42000 %}
           <div class="shadow-sm p-3 mb-5" style="background-color:lightgreen">Mean Income {{fips_data.mean_income|floatformat}} (Above Average)</div>
           {%else%}
@@ -21,7 +27,7 @@
            {%endif%}
 
     {%if fips_data.male_population_18_25 < fips_data.female_population_18_25 %}
-    <div class="shadow-sm p-3 mb-5" style="background-color:lightpink">Females 18-25 {{fips_data.female_population_18_25}} (More Females)</div>
+    <div class="shadow-sm p-3 mb-5" style="background-color:lavender ">Females 18-25 {{fips_data.female_population_18_25}} (More Females)</div>
           {%else%}
            <div class="shadow-sm p-3 mb-5">Females 18-25 {{fips_data.female_population_18_25}}</div>
           {%endif%}
@@ -35,7 +41,8 @@
       </div>
     </div>
 
-    <h4>Our Relation Tags</h4>
+    <h4>Your Relation Tags</h4>
+    Your company should be all about this:
     <div class="shadow-lg p-3 mb-5">
     {%for tag in tags%}
     {{tag}}
@@ -46,7 +53,7 @@
 
 <body>
 <div class="container" style="width:45%;float:right">
-
+    <p>Below find companies that might be great leads! They were selected based on location and your tags.</p>
     {% for lead in leads%}
     <div class="panel panel-primary">
       <div class="panel-heading"> {{lead.object_name}} - MatterMark Score: {{lead.company_mattermark_score}}</div>

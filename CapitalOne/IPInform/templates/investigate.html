@@ -7,6 +7,7 @@
 
     {%block main%}
     <h4>All Issue Areas</h4>
+    <b>Reduced {{total_traffic}} traffic hits to {{num_cluser}} clusters.</b>
     {%endblock%}
 
 
@@ -145,7 +146,7 @@
 
     <div class="shadow-lg p-3 mb-5">
         <div class="shadow-sm p-3 mb-5">Assuming you can convert 10% more people by advertising to identified web traffic.</div>
-        <div class="shadow-sm p-3 mb-5" style="background-color:lightgreen">Your gains are {{gains|floatformat}}!</div>
+        <div class="shadow-sm p-3 mb-5" style="background-color:lightgreen">Your gains are ${{gains|floatformat}}!</div>
     </div>
 
 
@@ -156,6 +157,7 @@
     {%block two%}
     <h4>Recommended Target Areas</h4>
     {%endblock%}
+    <b>Our recommendations are based on market demographics of your past sales. Including age, education and income.
 
  <div class="panel-group" id="accordion">
   <div class="panel panel-default">

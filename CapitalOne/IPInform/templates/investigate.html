@@ -1,5 +1,174 @@
 {% include "menu.html" %}
 
+
+<html>
 <div class="container" style="width:45%;float:left">
+    <body>
+
+    {%block main%}
+    <h4>All Issue Areas</h4>
+    {%endblock%}
+
+
+
+    <div id="map" style="height:400px;"></div>
+    <script>
+
+
+      var map, heatmap;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 3.5,
+          center: {lat: 40, lng: -100},
+          mapTypeId: 'satellite'
+        });
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: getPoints(),
+          map: map
+        });
+
+         var center_lat = {{ center_lat }}
+         var center_lng = {{ center_lng }}
+         var center_lat_fips = {{ center_lat_fips }}
+         var center_lng_fips = {{ center_lng_fips }}
+
+       var circle_secondary = {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: 'gray',
+    fillOpacity: .4,
+    scale: 3.5,
+    strokeWeight: 1
+};
+
+       var circle_prime= {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: 'gold',
+    fillOpacity: .6,
+    scale: 4.5,
+    strokeColor: 'white',
+    strokeWeight: 1
+};
+
+        for (i = 0; i < center_lat.length; i++) {
+            var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(center_lat[i],center_lng[i]),
+          map: map,
+          title:'',
+          icon:circle_secondary,
+        });
+    }
+
+         for (i = 0; i < center_lat_fips.length; i++) {
+            var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(center_lat_fips[i],center_lng_fips[i]),
+          map: map,
+          title:'',
+          icon:circle_prime,
+        });
+        }
+      }
+
+
+      function getPoints() {
+        var heat_lat = {{ lat | safe}}
+        var heat_lng = {{ lng | safe }}
+        console.log(heat_lat)
+        console.log(heat_lng)
+        var arr = []
+        for (i = 0; i < heat_lat.length; i++) {
+            var point = new google.maps.LatLng(heat_lat[i],heat_lng[i]);
+            arr.push(point)
+        }
+
+        return arr;
+      }
+
+      $(document).ready(function() {
+
+  $(".toggle-accordion").on("click", function() {
+    var accordionId = $(this).attr("accordion-id"),
+      numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+    $(this).toggleClass("active");
+
+    if (numPanelOpen == 0) {
+      openAllPanels(accordionId);
+    } else {
+      closeAllPanels(accordionId);
+    }
+  })
+
+  openAllPanels = function(aId) {
+    console.log("setAllPanelOpen");
+    $(aId + ' .panel-collapse:not(".in")').collapse('show');
+  }
+  closeAllPanels = function(aId) {
+    console.log("setAllPanelclose");
+    $(aId + ' .panel-collapse.in').collapse('hide');
+  }
+
+});
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAovwwttuLBsvolc97QUc5pejsbwfLPPZs&libraries=visualization&callback=initMap">
+
+    </script>
+    </div>
+
+
+<div class="container" style="width:45%;float:right;margin-right:5%;margin-top=5%">
+
+    {%block two%}
+    <h4>Recommended Target Areas</h4>
+    {%endblock%}
+
+ <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        Top Recommendation</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.</div>
+    </div>
+  </div>
+
+     {%for r in traffic%}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter|add:1}}"r>
+        {{r.name}}</a>
+      </h4>
+    </div>
+    <div id="collapse{{forloop.counter|add:1}}" "panel-collapse collapse">
+      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.</div>
+    </div>
+  </div>
+     {%endfor%}
+</div>
+
 
 </div>
+</div>
+
+
+    </body>
+
+
+<body>
+
+
+
+</body>
+</html>

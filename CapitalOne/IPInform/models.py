@@ -44,6 +44,18 @@ class IPAddress(models.Model):
     ip = models.GenericIPAddressField(protocol='both')
 
 
+class FipsData(models.Model):
+    fips = models.IntegerField(blank=True,null=True)
+    county = models.CharField(max_length=64, blank=True, null=True)
+    mean_income = models.IntegerField(blank=True,null=True)
+    total_population_18_25 =  models.IntegerField(blank=True,null=True)
+    male_population_18_25 = models.IntegerField(blank=True, null=True)
+    female_population_18_25 = models.IntegerField(blank=True, null=True)
+    population_18_25_bat_or_up = models.IntegerField(blank=True, null=True)
+    population_25_or_up = models.IntegerField(blank=True, null=True)
+    population_25_or_up_grad = models.IntegerField(blank=True, null=True)
+
+
 class Traffic(models.Model):
     ip = models.GenericIPAddressField(protocol='both')
     lat = models.DecimalField(decimal_places=6, max_digits=30, blank=True,null=True)
@@ -52,6 +64,8 @@ class Traffic(models.Model):
     city = models.CharField(max_length=64, blank=True, null=True)
     category = models.CharField(max_length=256, blank=True, null=True)
     domain = models.CharField(max_length=256, blank=True, null=True)
+    fips =  models.IntegerField(blank=True,null=True)
+    fips_data = models.ForeignKey(FipsData, on_delete=models.PROTECT, related_name="fips_data",null=True)
 
 
 

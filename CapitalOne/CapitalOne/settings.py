@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['*']
 CAPITAL_ONE_API_KEY = os.environ["CAPITAL_ONE_API_KEY"]
 CAPITAL_ONE_API = os.environ["CAPITAL_ONE_API"]
 IPINFO_API_KEY =  os.environ["IPINFO_API_KEY"]
+API_FIBS = os.environ["API_FIBS"]
+API_CENSUS = os.environ["API_CENSUS"]
 
 # Application definition
 
